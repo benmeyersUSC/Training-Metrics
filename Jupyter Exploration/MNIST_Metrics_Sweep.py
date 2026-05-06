@@ -814,9 +814,11 @@ The grid diagonal is one path through the landscape, but is it the *optimal* pat
 # %%
 # ── Scheduler config — edit these ────────────────────────────────────────
 # Default path: diagonal of the grid
-SCHEDULE_PATH = list(zip(GRID_BATCH_SIZES, GRID_LRS))
+_FULL_DIAGONAL = list(zip(GRID_BATCH_SIZES, GRID_LRS))
+SCHEDULE_START_STEP = 3          # skip first N steps (0 = start at bs=60, lr=1e-4)
+SCHEDULE_PATH = _FULL_DIAGONAL[SCHEDULE_START_STEP:]
 
-ETA1_PLATEAU_THRESHOLD = 0.02   # Δη1/epoch below this → advance to next step
+ETA1_PLATEAU_THRESHOLD = 0.05   # Δη1/epoch below this → advance to next step
 
 print('Schedule path (stepping along grid diagonal):')
 print(f'  {"step":>5} {"batch_size":>12} {"batch_frac":>12} {"lr":>10} {"bs_ratio":>10} {"lr_ratio":>10}')
